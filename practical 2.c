@@ -1,86 +1,88 @@
-#include <iostream>
-#include<iomanip>
+#include<iostream>
 using namespace std;
+#include<iomanip>
+#include<string>
+#include<cstdio>
 
-struct employee
+struct emp
 {
+    int empid;
+    string empname,empqualification;
+    float empexp;
+    long int empcontactno;
 
-    int id;
-private:
-    string name;
-    string Qualification;
-    int experience;
-    long long int contact_number;
-public:
-    void getdetail()
+    void addempdetail()
     {
-        // cout<<"Enter the Employee Detail"<<endl;
-        fflush(stdin);
-        cout << "Enter the Employee ID :";
-        cin >> id;
-        cout << "Enter Employee Name :";
-        getchar();
-        getline(cin, name);
-        cout << "Enter the Qualification :";
-        getline(cin, Qualification);
-       // fflush(stdin);
-        cout << "Enter Experience :";
-        cin >> experience;
-       // fflush(stdin);
-        cout << "Enter the Contact Number :";
-        cin >> contact_number;
-        fflush(stdin);
+        cout<<"enter empid:";
+        cin>>empid;
+        cout<<"enter empname:";
+        cin>>empname;
+        cin.ignore();
+        cout<<"enter empqualification:";
+        cin>>empqualification;
+        cin.ignore();
+        cout<<"enter empexp:";
+        cin>>empexp;
+        cout<<"enter empcontact no:";
+        cin>>empcontactno;
+
     }
-    void display()
-    {   cout << "----------------------------------"<<endl;
-        cout.width(20);
-        cout <<left<<"Employee ID"<<":"<< id << endl;
-        cout.width(20);
-        cout<<left<<"Employee Name"<<":"<< name<<endl;
-        cout.width(20);
-        cout<<left<<"Qualification"<<":"<<Qualification << endl;
-        cout.width(20);
-        cout<<left <<"Experience"<<":"<< experience << endl;
-        cout.width(20);
-        cout<<left<<"Contact Number"<<":"<< contact_number<<endl;
-        cout << "----------------------------------"<<endl;
+
+    int showempdetail(int id)
+    {
+        cout<<"-------------------------------------"<<endl;
+
+        cout<<"Employee Name     :"<<empname<<endl;
+
+        cout<<"Qualification     :"<<empqualification<<endl;
+
+        cout<<"Experience        :"<<empexp<<endl;
+
+        cout<<"Contact Number    :"<<empcontactno<<endl;
+
+        cout<<"-------------------------------------"<<endl;
+
     }
+
 };
+
 int main()
 {
-    int n;
-
-    cout << "Enter the number of Employee :";
-    cin >> n;
-    employee e[n];
-    for (int i = 0; i < n; i++)
+    struct emp e[1000];
+    int n,i,id;
+    cout<<"enter the no of emp"<<endl;
+    cin>>n;
+    for(i=0;i<n;i++)
     {
-        cout<<"Enter Detail for "<<i+1<<"Employee"<<endl;
-        e[i].getdetail();
+        e[i].addempdetail();
     }
-    char ch;
-    int emp_id;
-    do
+    system("cls");
+    next:cout<<"Enter an employee id:";
+    cin>>id;
+
+    for(i=0;i<n;i++)
     {
-        cout << "Enter an Employee id which you want to check :"<<endl;
-        cin >> emp_id;
-        for (int i = 0; i < n; i++)
+        if(e[i].empid==id)
         {
-            int flag=0;
-            if (emp_id == e[i].id)
-            {
-
-                e[i].display();
-                break;
-            }
-             if(i==n-1)
-            {
-                cout << "**************"<<endl;
-                cout << "ERROR:ENTERED EMPLOYEE ID DOSE NOT EXIST"<<endl;
-                cout << "**************"<<endl;
-
-            }
+            e[i].showempdetail(id);
+            break;
         }
-        cout<<"Press Y for another Employee detail or N to Exit:";
-        cin>>ch;
-    }while(ch=='Y'||ch=='y');
+    }
+    if(i==n)
+    {
+        cout<<"*************"<<endl;
+        cout<<"ERROR : ENTERED EMPLOYEE ID DOES NOT EXIST"<<endl;
+        cout<<"*************"<<endl;
+
+    }
+
+    char c;
+    cout<<"Please Y to get another employee detail,Press N to exit :";
+    cin>>c;
+
+    if(c=='y'||c=='Y')
+    {
+        goto next;
+    }
+
+}
