@@ -1,0 +1,36 @@
+// class to basic datatype
+/*
+Here , we will use operator function
+*/
+#include <iostream>
+#include <iomanip>
+using namespace std;
+class emp
+{
+    float exp;
+    int year, month;
+
+public:
+    operator float()
+    {
+        return exp;
+    }
+    void getData()
+    {
+        cout << "Enter the years of experience: ";
+        cin >> year;
+        cout << "Enter the months of experience: ";
+        cin >> month;
+        // exp = (month)/12 + year;
+        exp = year + (float)month / (12);
+    }
+};
+int main()
+{
+    emp e1;
+    float temp;
+    e1.getData();
+    temp = e1;
+    cout << "Temp = " << setprecision(4) << temp << endl;
+    return 0;
+}
