@@ -1,0 +1,108 @@
+*  operator overloading
+overloading unary object ----- 1) member function.  (needed 0 arguments)
+                               2)friend function.   (needed 1 arguments)
+
+
+overloading binary object ---- 1)member function.  (needed 1 arguments)
+                               2)friend function.   (needed 2 arguments)
+*/
+
+#include <iostream>
+using namespace std;
+class calculator
+{
+    int a, b;
+
+public:
+    void getdata()
+    {
+        cout << "Enter the real part : ";
+        cin >> a;
+        cout << "Enter the imaginary part: ";
+        cin >> b;
+    }
+    void display()
+    {
+        if (b < 0)
+        {
+            cout << a << b << "i" << endl;
+        }
+        else
+        {
+            cout << a << " + " << b << "i" << endl;
+        }
+    }
+    calculator operator+(calculator &B)
+    {
+        calculator temp;
+        temp.a = a + B.a;
+        temp.b = b + B.b;
+        return temp;
+    }
+    calculator operator-(calculator &B)
+    {
+        calculator temp;
+        temp.a = a - B.a;
+        temp.b = b - B.b;
+        return temp;
+    }
+    calculator operator*(calculator &B)
+    {
+        calculator temp;
+        temp.a = (a * B.a) - (b * B.b);
+        temp.b = (a * B.b) + (b * B.a);
+        return temp;
+    }
+    calculator operator/(calculator &B)
+    {
+        calculator temp;
+        temp.a = ((a * B.a) + (b * B.b)) / ((B.a * B.a) + (B.b * B.b));
+        temp.b = ((b * B.a) - (a * B.a)) / ((B.a * B.a) + (B.b * B.b));
+        return temp;
+    }
+    void operator!()
+    {
+        a = -a;
+        b = -b;
+    }
+};
+int main()
+{
+    calculator a, b, c;
+    a.getdata();
+    b.getdata();
+    cout << "(+) addition" << endl;
+    cout << "(-) subtraction" << endl;
+    cout << "(*) multiplication" << endl;
+    cout << "(/) division" << endl;
+    cout << "(!) negation" << endl;
+    char sign;
+    cout << "Enter your choice: ";
+    cin >> sign;
+    switch (sign)
+    {
+    case '+':
+        c = a + b;
+        c.display();
+        break;
+    case '-':
+        c = a - b;
+        c.display();
+        break;
+    case '*':
+        c = a * b;
+        c.display();
+        break;
+    case '/':
+        c = a / b;
+        c.display();
+        break;
+    case '!':
+        !a;
+        a.display();
+        !b;
+        b.display();
+        break;
+    }
+    return 0;
+}
