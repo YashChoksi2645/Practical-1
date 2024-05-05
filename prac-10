@@ -1,0 +1,38 @@
+/*  basic to class.
+ 
+ class_datatype = basic_datatype
+ here we will use constructor. default and parametrized constructor.
+*/
+#include <iostream>
+using namespace std;
+class emp_exp
+{
+    int year;
+    int month;
+
+public:
+    emp_exp()
+    {
+        year = month = 0;
+    }
+    emp_exp(float exp)
+    {
+        year = exp;
+        month = (exp - year) * 12;
+    }
+    void display()
+    {
+        cout << "Year : " << year << endl;
+        cout << "Month : " << month << endl;
+    }
+};
+int main()
+{
+    emp_exp e;
+    float temp;
+    cout << "Enter the experience : ";
+    cin >> temp;
+    e = temp;
+    e.display();
+    return 0;
+}
