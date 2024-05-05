@@ -1,0 +1,114 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+class product{
+    protected : 
+        int product_id;
+        string product_name , product_manufacturer;
+        float product_price;  
+
+    public : 
+        product(int id, string n , string m , float p){
+            product_id = id ;
+            product_name = n ;
+            product_manufacturer = m ;
+            product_price = p ; 
+        } 
+        virtual void putData() = 0 ;
+};
+
+class smartWatch : public product {
+    protected : 
+
+    float dial_size;
+
+    public : 
+
+    smartWatch(int id, string n , string m , float p, float d) : product(id , n , m , p)
+    {
+        dial_size = d;
+    }
+
+    void putData(){
+        cout<<"--------------------------------------------------"<<endl;
+        cout<<product_id<<" : "<<product_name<<" : "<<product_manufacturer<<" : "<<product_price<<" : "<<dial_size<<endl;
+        cout<<"--------------------------------------------------"<<endl;
+    }
+};
+class bedsheet : public product {
+    protected : 
+
+    float width , height ;
+
+    public : 
+
+    bedsheet(int id, string n , string m , float p, float w , float h) : product(id , n , m , p)
+    {
+        width = w;
+        height = h;
+    }
+
+    void putData(){
+        cout<<"--------------------------------------------------"<<endl; 
+
+        cout<<product_id<<" : "<<product_name<<" : "<<product_manufacturer<<" : "<<product_price<<" : "<<width<<" : "<<height<<endl;cout<<"--------------------------------------------------"<<endl;
+    }
+
+};
+
+int main(){
+    int id , n;
+    string name , manufacturer ;
+    float price;
+    float dial_size , width , heigth ; 
+
+    cout<<"Enter 1 : smart watch menu"<<endl;
+    cout<<"Enter 2 : bedsheet menu"<<endl;
+    cin>>n;
+
+    switch(n){
+     case 1: 
+        cout<<"Enter the product id : ";
+        cin>>id;
+        cout<<"Enter the product name : ";
+        fflush(stdin);
+        getline(cin,name);
+        cout<<"Enter the manufacturer : ";
+        fflush(stdin);
+        getline(cin,manufacturer);
+        cout<<"Enter the Price : ";
+        cin>>price;
+        cout<<"Enter the dial size : ";
+        cin>>dial_size;
+        // smartWatch s(id,name,manufacturer,price,dial_size);
+        // s.putData();
+        smartWatch *p ;
+        p = new smartWatch(id , name , manufacturer , price , dial_size);
+        p->putData();
+        break;
+     case 2:
+        cout<<"Enter the product id : ";
+        cin>>id;
+        cout<<"Enter the product name : ";
+        fflush(stdin);
+        getline(cin,name);
+        cout<<"Enter the manufacturer : ";
+        fflush(stdin);
+        getline(cin,manufacturer);
+        cout<<"Enter the Price : ";
+        cin>>price;
+        cout<<"Enter the width of bedsheet : ";
+        cin>>width;
+        cout<<"Enter the height of bedsheet : ";
+        cin>>heigth;
+        bedsheet *b;
+        b= new bedsheet(id,name,manufacturer,price,width,heigth);
+        b->putData();
+        break;
+     default:
+        cout<<"INvalid choice!!"<<endl;
+        break;
+    }
+return 0;
+}
