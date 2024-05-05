@@ -1,0 +1,222 @@
+/* Here we will extend our pract 6
+
+we have used to concept of function overriding
+
+function name in base class and all derived class are same.
+
+if know are trying to access the function through derived class than the derived class function will be executed , if we want that some other object's function must be execute than we have to use objname an scope resolution (::).
+
+objname(base class).objectname(of that class whose function will execute) :: funciton_name .
+
+it is a runtime polymorphism.
+
+by vraj_23ce807
+
+*/
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class emp
+{
+    int emp_id;
+    string emp_name;
+    string qualification;
+    float exp;
+    long int contact_no;
+    static float avg_exp;
+
+public:
+    void getdata()
+    {
+        cout << "Enter employee id: ";
+        cin >> emp_id;
+        cout << "Enter employee name: ";
+        fflush(stdin);
+        getline(cin, emp_name);
+        cout << "Enter qualifications: ";
+        fflush(stdin);
+        getline(cin, qualification);
+        cout << "Enter experience: ";
+        fflush(stdin);
+        cin >> exp;
+        cout << "Enter contact number: ";
+        cin >> contact_no;
+        avg_exp += exp;
+    }
+    void display()
+    {
+
+        cout << setw(19) << left << "Employee name "
+             << ": " << emp_name << endl
+             << "\n";
+
+        cout << setw(19) << left << "Qualification "
+             << ": " << qualification << endl
+             << "\n";
+
+        cout << setw(19) << left << "Experience "
+             << ": " << exp << endl
+             << "\n";
+
+        cout << setw(19) << left << "contact number "
+             << ": " << contact_no << endl
+             << "\n";
+    }
+    int returnEmp_id()
+    {
+        return emp_id;
+    }
+    static void avg_experience(int n)
+    {
+        // avg_exp += exp;
+        avg_exp = avg_exp / n;
+        cout << "The avgerage experience is : " << avg_exp << "Years!!" << endl;
+    }
+};
+
+class teach_emp : protected emp
+{
+
+    string designation, specialization, payscale;
+
+public:
+    void getdata()
+    {
+        emp ::getdata();
+        cout << "Enter designation : ";
+        fflush(stdin);
+        getline(cin, designation);
+        cout << "Enter specialiaztion : ";
+        fflush(stdin);
+        getline(cin, specialization);
+        cout << "Enter Pay scale : ";
+        fflush(stdin);
+        getline(cin, payscale);
+    }
+    void display()
+    {
+        emp ::display();
+        cout << setw(19) << left << "Designation: "
+             << ": " << designation << endl
+             << "\n";
+        cout << setw(19) << left << "Specialization: "
+             << ": " << specialization << endl
+             << "\n";
+        cout << setw(19) << left << "Pay scale: "
+             << ": " << payscale << endl
+             << "\n";
+    }
+    int return_teaching_empId()
+    {
+        return returnEmp_id();
+    }
+};
+
+class nonteac_emp : protected emp
+{
+    int salary;
+
+public:
+    void getdata()
+    {
+        emp ::getdata();
+        cout << "Enter the salary of no teaching employee : ";
+        cin >> salary;
+    }
+    void display()
+    {
+        emp ::display();
+        cout << setw(19) << left << "salary: "
+             << ": " << salary << endl
+             << "\n";
+    }
+    int retur_nonteaching_empId()
+    {
+        return returnEmp_id();
+    }
+};
+float emp ::avg_exp = 0;
+int main()
+{
+    int t_n, nt_n;
+    int i, j;
+    cout << "Enter the total number of teaching employees : ";
+    cin >> t_n;
+    cout << "Enter the total number of non teaching employees: ";
+    cin >> nt_n;
+    teach_emp te[t_n];
+    nonteac_emp nte[nt_n];
+    for (int i = 0; i < t_n; i++)
+    {
+        cout << "Enter details for teaching employee no. " << i + 1 << endl;
+        te[i].getdata();
+        cout << "\n";
+    }
+    for (i = 0; i < nt_n; i++)
+    {
+        cout << "Enter the details for non-teaching employee no. " << i + 1 << endl;
+        nte[i].getdata();
+        cout << "\n";
+    }
+
+    int choice;
+    cout << "Enter 1 for retriving the employee details!" << endl;
+    cout << "Enter 2 for calculating the employee average experience!" << endl;
+    cin >> choice;
+    int emp_id;
+    char c;
+    switch (choice)
+    {
+
+    case 1:
+        do
+        {
+            cout << "-----------------------------------------\n";
+            cout << "Enter the employee id for search: " << endl;
+            cin >> emp_id;
+            i = 0;
+            for (i = 0; i < t_n; i++)
+            {
+                if (emp_id == te[i].return_teaching_empId())
+                {
+
+                    cout << "The employee is a teaching Employee!!\n"
+                         << endl;
+                    cout << "-----------------------------------------\n";
+                    te[i].display();
+                    cout << "-----------------------------------------\n";
+                    break;
+                }
+            }
+            j = 0;
+            for (j = 0; j < nt_n; j++)
+            {
+                if (emp_id == nte[j].retur_nonteaching_empId())
+                {
+                    cout << "The employee is a non-teaching Employee!!" << endl;
+                    cout << "-----------------------------------------\n";
+                    nte[j].display();
+                    cout << "-----------------------------------------\n";
+                    break;
+                }
+            }
+            // cout<<i<<j<<endl;
+            if (i == t_n && j == nt_n)
+            {
+                cout << "**************\n";
+                cout << "entered employee number does not exists!!\n";
+                cout << "**************\n";
+            }
+
+            cout << "Enter 'y' for next retrivement or ese to exit press 'n': ";
+            cin >> c;
+        } while (c != 'n');
+        break;
+    case 2:
+        emp::avg_experience(t_n + nt_n);
+        break;
+    }
+    return 0;
+}
